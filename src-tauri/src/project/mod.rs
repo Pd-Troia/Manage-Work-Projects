@@ -1,24 +1,26 @@
 use std::path::Path;
 use std::process::Command;
-fn open_vscode(){
-    println!("maria");
-    Command::new("code")
-             .arg(".")
-             .output()
-             .expect("falha ao abrir vscode");
+use std::env;
+fn open_vscode(path:&String){
+    if let Ok(_) = env::set_current_dir(path){
+        Command::new("cmd")
+                 .args(["/C","code ."])
+                 .output()
+                 .expect("falha ao abrir vscode");
+    }
  }
- fn open_dir(dir:&String){
-    println!("joao");
-     Command::new("cmd")
-             .args(["cd", dir])
-             .output()  
-             .expect("falha ao mudar o diretorio");
- }
+//  fn open_dir(dir:&String){
+//     println!("joao");
+//      Command::new("cmd")
+//              .args(["cd", dir])
+//              .output()  
+//              .expect("falha ao mudar o diretorio");
+//  }
 pub fn open_project(project_path:&Path){
     let dir_list = get_child_dirs(project_path);
+    //  open_dir(&dir);
     for dir in dir_list.into_iter() {        
-         open_dir(&dir);
-         open_vscode();       
+         open_vscode(&dir);       
     }
 }
 
