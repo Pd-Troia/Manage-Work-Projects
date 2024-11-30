@@ -37,6 +37,3 @@ pub fn get_child_dirs(dir: &Path) -> Vec<String> {
     return folders;
 }
 
-pub fn get_config_file(){
-    
-}
