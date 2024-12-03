@@ -1,4 +1,6 @@
 use std::{env, fs, path::Path};
+
+use serde::de::Expected;
 #[derive(serde::Deserialize,serde::Serialize)]
 pub struct Settings{
     root_folder: String
@@ -10,12 +12,13 @@ pub struct Config{
 
 impl Config{    
     pub fn new()-> Self{          
-        let path_str = env::current_dir()
-            .expect("executável não encontrado")
-            .parent()
-            .expect("não foi possivel retornar ao pai")
-            .to_path_buf()
-            .som;
+        let path = env::current_dir()
+            .expect("executável não encontrado");
+        let path_str = String::from(path            
+            .join("src/config/config.json")
+            .to_str()
+            .unwrap());
+        print!("mario {}",path_str);
         let path = Path::new(&path_str);
         let file = fs::read_to_string(&path).expect("erro ao ler o arquivo de configuração");
         let str_file = file.as_str();
