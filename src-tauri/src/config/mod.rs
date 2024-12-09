@@ -24,8 +24,7 @@ impl Config{
             settings 
         }
     } 
-    pub fn get_settings(&self)-> Settings{
-        println!("path: {}",&self.path);
+    pub fn get_settings(&self)-> Settings{        
         let str_file = Self::get_config_file(&self.path);
         let settings: Settings = serde_json::from_str(str_file.as_str()).expect("erro ao ler o arquivo de configurações");
         return settings
