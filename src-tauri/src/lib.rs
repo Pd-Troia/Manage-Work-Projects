@@ -1,7 +1,7 @@
 mod project;
 mod config;
 use std::path::Path;
-use config::Config;
+use config::{Config};
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 
 #[tauri::command]
@@ -10,7 +10,9 @@ fn greet(name: &str) -> String {
 }
 #[tauri::command]
 fn get_projects() -> Vec<String> {
-    let dir = Path::new("C:/Users/hytalo/OneDrive/Desktop/trabalho");
+    let settings = Config::new();
+    let root_path = settings.get_settings().root_folder;
+    let dir = Path::new(&root_path);
     return project::get_child_dirs(&dir);
 }
 #[tauri::command]

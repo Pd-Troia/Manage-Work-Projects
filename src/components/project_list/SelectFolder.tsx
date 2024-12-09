@@ -11,9 +11,9 @@ export default function SelectFolder () {
         multiple: false,
         directory: true
     })
-    .then(path=>{
-      console.log("path",path)
-      invoke("save_root_folder",{rootPath:path}).catch(err=>"qual erro?"+err)
+    .then(path=>{      
+      const processedPath = path?.replace(/\\/g,"/");    
+      invoke("save_root_folder",{rootPath:processedPath}).catch(err=>"qual erro?"+err)
       setPath(path);
     })
     .catch(e=>console.log("erro ao selecionar o path",e))
