@@ -1,7 +1,7 @@
 mod project;
 mod config;
 use std::path::Path;
-use config::{Config};
+use config::Config;
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 
 #[tauri::command]
@@ -16,9 +16,9 @@ fn get_projects() -> Vec<String> {
     return project::get_child_dirs(&dir);
 }
 #[tauri::command]
-fn open_project(project_path: String) {
+fn open_project(project_path: String) {    
     let dir = Path::new(&project_path);
-    project::open_project(dir);
+    project::open_project(dir);    
 }
 #[tauri::command]
 fn save_root_folder(root_path: String) {    

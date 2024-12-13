@@ -3,19 +3,24 @@ import styles from "./projectList.module.css"
 import { invoke } from '@tauri-apps/api/core';
 import ProjectItem from './ProjectItem';
 import SelectFolder from './SelectFolder';
-export interface IProjectListProps {
+export interface IProjectContext {
+    projectDispatch: React.Dispatch<React.SetStateAction<string[]>>
 }
 
-export default function ProjectList ({}: IProjectListProps) {
-    const [projectNames,setprojectNames] = React.useState<string[]>([])
+const DEFAULT_STATE = {
+    projectDispatch: ()=>{}
+}
+export const ProjectContex = React.createContext<IProjectContext>(DEFAULT_STATE);
+export default function ProjectList ({}) {
+    const [projectNames,setProjectNames] = React.useState<string[]>([])
     React.useEffect(()=>{
         (async()=>{
             const projects = await invoke("get_projects") as string[]            
-            setprojectNames(projects)
+            setProjectNames(projects)
         })()        
     },[])    
     return (
-    <>
+    <ProjectContex.Provider value={{projectDispatch:setProjectNames}}>
         <SelectFolder/>
         <div className={styles.container}>
             <h1>Lista de Projetos</h1>
@@ -27,6 +32,6 @@ export default function ProjectList ({}: IProjectListProps) {
                 })}
             </div>
         </div>
-    </>
+    </ProjectContex.Provider>
   );
 }

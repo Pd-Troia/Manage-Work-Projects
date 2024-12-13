@@ -10,13 +10,8 @@ pub struct Config{
 }
 
 impl Config{    
-    pub fn new()-> Self{          
-        let path = env::current_dir()
-            .expect("executável não encontrado");
-        let path_str = String::from(path            
-            .join("src/config/config.json")
-            .to_str()
-            .unwrap());             
+    pub fn new()-> Self{
+        let path_str = Self::create_if_not_exists_config_file();          
         let str_file = Self::get_config_file(&path_str);
         let settings: Settings = serde_json::from_str(str_file.as_str()).expect("erro na desserialização");
         Self {
@@ -39,9 +34,26 @@ impl Config{
         self.settings.root_folder = root_folder;
         self.save_settings();
     }
-    fn get_config_file(path_str : &String)-> String{
+    fn get_config_file(path_str : &String)-> String{        
         let path = Path::new(&path_str);
         let file = fs::read_to_string(&path).expect("erro ao ler o arquivo de configuração");
         return file;
     }
+    fn create_if_not_exists_config_folder()->std::path::PathBuf{
+        let config_path = env::var("APPDATA").unwrap();
+        let config_folder_path = Path::new(&config_path).join("Manage Projects");             
+        if let Err(_) = fs::create_dir(&config_folder_path){
+            return config_folder_path;
+        }        
+        return config_folder_path;
+    }   
+    fn create_if_not_exists_config_file()->String{
+        let config_folder = Self::create_if_not_exists_config_folder().join("config.json");
+        let str_config_folder = String::from(config_folder.to_str().unwrap());
+        if !config_folder.exists() {
+            let str_file = String::from("{\"root_folder\":\"\"}"); 
+            fs::write(config_folder, str_file).ok().expect("erro ao escrever o arquivo de configurações");
+        }
+        return str_config_folder;
+    }      
 }

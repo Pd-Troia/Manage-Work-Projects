@@ -16,7 +16,7 @@ pub fn open_project(project_path: &Path) {
     }
 }
 
-pub fn get_child_dirs(dir: &Path) -> Vec<String> {
+pub fn get_child_dirs(dir: &Path) -> Vec<String> {    
     let child = std::fs::read_dir(dir);
     let mut folders: Vec<String> = Vec::new();
     match child {
