@@ -10,13 +10,13 @@ fn open_vscode(path: &String) {
     }
 }
 pub fn open_project(project_path: &Path) {
-    let dir_list = get_child_dirs(project_path);    
+    let dir_list = get_child_dirs(project_path);
     for dir in dir_list.into_iter() {
         open_vscode(&dir);
     }
 }
 
-pub fn get_child_dirs(dir: &Path) -> Vec<String> {    
+pub fn get_child_dirs(dir: &Path) -> Vec<String> {
     let child = std::fs::read_dir(dir);
     let mut folders: Vec<String> = Vec::new();
     match child {
@@ -36,4 +36,3 @@ pub fn get_child_dirs(dir: &Path) -> Vec<String> {
     }
     return folders;
 }
-

@@ -12,7 +12,7 @@ fn greet(name: &str) -> String {
 fn get_projects() -> Vec<String> {
     let settings = Config::new();
     let root_path = settings.get_settings().root_folder;
-    let dir = Path::new(&root_path);
+    let dir = Path::new(&root_path);    
     return project::get_child_dirs(&dir);
 }
 #[tauri::command]
@@ -29,6 +29,13 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_shell::init())
+        .plugin(
+            tauri_plugin_log::Builder::new()
+                .target(tauri_plugin_log::Target::new(
+                    tauri_plugin_log::TargetKind::LogDir { file_name: Some("logs".to_string()) }
+                ))
+                .build()
+        )
         .invoke_handler(tauri::generate_handler![greet, open_project, get_projects,save_root_folder])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
