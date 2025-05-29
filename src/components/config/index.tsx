@@ -21,7 +21,7 @@ export default function Config ({}: IConfigProps) {
     const changeDefaultLogin = (e:React.ChangeEvent<HTMLInputElement>)=>{
        const isChecked = e.currentTarget.checked ? true : false
        invoke("save_default_login",{
-        state:!isChecked
+        state:isChecked
        }).then(()=>{
             if(!config) return
             const obj:Settings = {...config,default_login:isChecked} 
