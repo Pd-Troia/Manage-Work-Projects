@@ -1,0 +1,41 @@
+.overlay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;      
+    animation: blur 250ms forwards;
+}
+.modal{
+    border: 1px solid white;
+    min-height: 300px;
+    display: flex;
+    padding: 5px;
+    border-radius: 5px;
+    flex-direction: column;
+    /* backdrop-filter: blur(8px); */
+}
+
+.modalHeader{
+    display: flex;
+    justify-content: end;
+    padding:2.5px;
+}
+
+.closeContainer{
+    cursor: pointer;
+}
+.modalBody{
+    backdrop-filter: blur(0px);
+}
+@keyframes blur {
+    from{
+      backdrop-filter: blur(0px);  
+    }
+    to{
+        backdrop-filter: blur(5px);
+    }
+}

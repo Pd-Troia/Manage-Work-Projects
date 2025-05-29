@@ -1,9 +1,12 @@
 use std::{env, fs, path::Path};
 
 #[derive(serde::Deserialize, serde::Serialize)]
+#[derive(Debug)]
 pub struct Settings {
     pub root_folder: String,
+    pub default_login: bool
 }
+#[derive(Debug)]
 pub struct Config {
     path: String,
     settings: Settings,
@@ -28,10 +31,14 @@ impl Config {
     }
     fn save_settings(&self) {
         let seriealized = serde_json::to_string(&self.settings).ok().unwrap();
-        fs::write(&self.path, seriealized).expect("falha ao escrever o arquivo");
+        fs::write(&self.path,seriealized).expect("falha ao escrever o arquivo");
     }
     pub fn save_root_folder(&mut self, root_folder: String) {
         self.settings.root_folder = root_folder;
+        self.save_settings();
+    }
+    pub fn save_default_login(&mut self, default_login:bool){
+        self.settings.default_login = default_login;
         self.save_settings();
     }
     fn get_config_file(path_str: &String) -> String {
@@ -51,7 +58,7 @@ impl Config {
         let config_folder = Self::create_if_not_exists_config_folder().join("config.json");
         let str_config_folder = String::from(config_folder.to_str().unwrap());
         if !config_folder.exists() {
-            let str_file = String::from("{\"root_folder\":\"\"}");
+            let str_file = String::from("{\"root_folder\":\"\",\"default_login\":false}");
             fs::write(config_folder, str_file)
                 .ok()
                 .expect("erro ao escrever o arquivo de configurações");

@@ -1,12 +1,23 @@
 mod project;
 mod config;
 use std::path::Path;
-use config::Config;
+use config::{Config, Settings};
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 
 #[tauri::command]
 fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
+}
+#[tauri::command]
+fn get_config() -> Settings{
+    Config::new().get_settings()
+}
+#[tauri::command]
+fn save_default_login(state: bool){
+    let mut config = Config::new();
+    print!("bool {}",state);
+    print!("bool {:?}",&config);    
+    config.save_default_login(state);
 }
 #[tauri::command]
 fn get_projects() -> Vec<String> {
@@ -36,7 +47,7 @@ pub fn run() {
                 ))
                 .build()
         )
-        .invoke_handler(tauri::generate_handler![greet, open_project, get_projects,save_root_folder])
+        .invoke_handler(tauri::generate_handler![greet,get_config,save_default_login, open_project, get_projects,save_root_folder])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

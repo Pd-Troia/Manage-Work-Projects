@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from "./projectList.module.css"
 import { invoke } from '@tauri-apps/api/core';
 import ProjectItem from './ProjectItem';
-import SelectFolder from './SelectFolder';
+import Config from '../config';
 export interface IProjectContext {
     projectDispatch: React.Dispatch<React.SetStateAction<string[]>>
 }
@@ -20,10 +20,12 @@ export default function ProjectList ({}) {
         })()        
     },[])    
     return (
-    <ProjectContex.Provider value={{projectDispatch:setProjectNames}}>
-        <SelectFolder/>
+    <ProjectContex.Provider value={{projectDispatch:setProjectNames}}>       
         <div className={styles.container}>
-            <h1>Lista de Projetos</h1>
+            <div className={styles.heeaderContainer}>
+                <h1>Lista de Projetos</h1>
+                <Config/>
+            </div>
             <div className={styles.wrapper}>
                 {projectNames.map((item)=>{
                     return (

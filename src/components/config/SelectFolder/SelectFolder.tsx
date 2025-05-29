@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { open } from '@tauri-apps/plugin-dialog';
 import { invoke } from '@tauri-apps/api/core';
-import { ProjectContex } from '.';
+import { ProjectContex } from '../../project_list';
 export interface ISelectFolderProps {
 }
 
