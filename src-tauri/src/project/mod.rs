@@ -16,9 +16,11 @@ fn open_vscode(path: &String) {
 fn login_vendor(vendor: &str){    
     let settings = Config::new().get_settings();  
     print!("{}",&settings.default_login); 
+    let command = format!("vtex {}",&vendor);
+    println!("{}",&command);
     if settings.default_login {
         Command::new("cmd")
-        .args(["/K", "vtex", &vendor])
+        .args(["/K", &command])
         .spawn() 
         .expect("Erro ao abrir a loja");
     }   
