@@ -1,0 +1,9 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.congfigIcon{
+    filter: invert(1);
+    cursor:pointer
+}

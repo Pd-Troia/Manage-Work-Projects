@@ -1,0 +1,15 @@
+.booleanContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0f0f0f98;
+    padding: 4px;
+    border-radius: 8px;
+    padding: .6em 1.2em;
+    width:100%;
+}
+
+.checkbox{
+    cursor: pointer;
+    
+}

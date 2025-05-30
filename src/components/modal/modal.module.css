@@ -39,3 +39,16 @@
         backdrop-filter: blur(5px);
     }
 }
+.modalBody{
+    row-gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;      
+    max-width: 100%; 
+}
+
+.modalBody > div{
+    box-sizing: border-box;
+}
