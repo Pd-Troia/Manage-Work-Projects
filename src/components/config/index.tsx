@@ -4,6 +4,7 @@ import Modal from '../modal/Modal';
 import SelectFolder from './SelectFolder/SelectFolder';
 import BooleanState from './BooleanState.tsx';
 import { invoke } from '@tauri-apps/api/core';
+import style from "./config.module.css"
 export interface IConfigProps {
 }
 interface Settings{
@@ -30,8 +31,8 @@ export default function Config ({}: IConfigProps) {
        )
     }
     return (
-    <div>
-        <img onClick={()=>setIsModalOpen(true)} src={configurationIcon} alt="config-icon" />
+    <div className={style.container}>
+        <img className={style.configIcon} onClick={()=>setIsModalOpen(true)} src={configurationIcon} alt="config-icon" />
         <Modal handleClose={()=>setIsModalOpen(false)} isOpen={isModalOpen}>
             <>
                 <SelectFolder/>

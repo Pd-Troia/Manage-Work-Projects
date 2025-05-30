@@ -14,9 +14,7 @@ fn get_config() -> Settings{
 }
 #[tauri::command]
 fn save_default_login(state: bool){
-    let mut config = Config::new();
-    print!("bool {}",state);
-    print!("bool {:?}",&config);    
+    let mut config = Config::new();      
     config.save_default_login(state);
 }
 #[tauri::command]
@@ -29,7 +27,7 @@ fn get_projects() -> Vec<String> {
 #[tauri::command]
 fn open_project(project_path: String) {    
     let dir = Path::new(&project_path);
-    project::open_project(dir);    
+    project::open_project(dir);          
 }
 #[tauri::command]
 fn save_root_folder(root_path: String) {    

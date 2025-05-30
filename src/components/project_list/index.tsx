@@ -22,7 +22,8 @@ export default function ProjectList ({}) {
     return (
     <ProjectContex.Provider value={{projectDispatch:setProjectNames}}>       
         <div className={styles.container}>
-            <div className={styles.heeaderContainer}>
+            <div className={styles.headerContainer}>
+                <div></div>
                 <h1>Lista de Projetos</h1>
                 <Config/>
             </div>

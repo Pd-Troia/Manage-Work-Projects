@@ -12,7 +12,7 @@ export default function BooleanState ({text,handleChange,checked}: IBooleanState
     <div className={styles.booleanContainer}>
         <span className={styles.text}>{text}</span>
         <form onSubmit={(e)=>e.preventDefault()}>
-            <input checked={checked} type="checkbox" onChange={handleChange}/>
+            <input className={styles.checkbox} checked={checked} type="checkbox" onChange={handleChange}/>
         </form>
     </div>
   );

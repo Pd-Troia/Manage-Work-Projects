@@ -1,16 +1,33 @@
-use std::env;
+use std::{env};
 use std::path::Path;
 use std::process::Command;
+
+use crate::Config;
+
+
 fn open_vscode(path: &String) {
     if let Ok(_) = env::set_current_dir(path) {
         Command::new("cmd")
             .args(["/C", "code ."])
             .output()
             .expect("falha ao abrir vscode");
-    }
+    }    
+}
+fn login_vendor(vendor: &str){    
+    let settings = Config::new().get_settings();  
+    print!("{}",&settings.default_login); 
+    if settings.default_login {
+        Command::new("cmd")
+        .args(["/K", "vtex", &vendor])
+        .spawn() 
+        .expect("Erro ao abrir a loja");
+    }   
 }
 pub fn open_project(project_path: &Path) {
-    let dir_list = get_child_dirs(project_path);
+    let dir_list = get_child_dirs(&project_path);
+    let path_splited = project_path.to_str().unwrap().split("\\");
+    let actual_vendor = path_splited.last().unwrap(); 
+    login_vendor(&actual_vendor);
     for dir in dir_list.into_iter() {
         open_vscode(&dir);
     }
