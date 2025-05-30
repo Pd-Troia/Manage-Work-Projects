@@ -14,10 +14,8 @@ fn open_vscode(path: &String) {
     }    
 }
 fn login_vendor(vendor: &str){    
-    let settings = Config::new().get_settings();  
-    print!("{}",&settings.default_login); 
-    let command = format!("vtex {}",&vendor);
-    println!("{}",&command);
+    let settings = Config::new().get_settings();     
+    let command = format!("vtex login {}",&vendor);    
     if settings.default_login {
         Command::new("cmd")
         .args(["/K", &command])
