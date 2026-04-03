@@ -8,13 +8,20 @@ export interface IModalProps {
 }
 
 export default function Modal ({isOpen,handleClose, children}: IModalProps) {
+  React.useEffect(() => {
+    if (!isOpen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") handleClose() }
+    document.addEventListener("keydown", onKey)
+    return () => document.removeEventListener("keydown", onKey)
+  }, [isOpen, handleClose])
+
   return (
     <>
       {
-      isOpen 
+      isOpen
         ?(
-          <div className={style.overlay}>
-            <div className={style.modal}>
+          <div className={style.overlay} onClick={handleClose}>
+            <div className={style.modal} onClick={(e) => e.stopPropagation()}>
               <div className={style.modalHeader}>
                 <div className={style.closeContainer}>
                   <img onClick={handleClose} src={close} alt="icon-close" />
