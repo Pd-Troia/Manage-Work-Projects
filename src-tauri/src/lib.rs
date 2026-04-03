@@ -25,12 +25,28 @@ fn get_projects() -> Vec<String> {
     return project::get_child_dirs(&dir);
 }
 #[tauri::command]
-fn open_project(project_path: String) {    
+fn open_project(project_path: String) {
     let dir = Path::new(&project_path);
-    project::open_project(dir);          
+    project::open_project(dir);
 }
 #[tauri::command]
-fn save_root_folder(root_path: String) {    
+fn open_single_dir(dir_path: String) {
+    let dir = Path::new(&dir_path);
+    project::open_single_dir(dir);
+}
+#[tauri::command]
+fn get_project_dirs(project_path: String) -> Vec<String> {
+    let dir = Path::new(&project_path);
+    project::get_child_dirs(dir)
+}
+#[tauri::command]
+fn vendor_login(project_path: String) {
+    let dir = Path::new(&project_path);
+    let vendor = project::extract_vendor_from_path(dir);
+    project::login_vendor_manual(&vendor);
+}
+#[tauri::command]
+fn save_root_folder(root_path: String) {
     Config::new().save_root_folder(root_path);
 }
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -45,7 +61,7 @@ pub fn run() {
                 ))
                 .build()
         )
-        .invoke_handler(tauri::generate_handler![greet,get_config,save_default_login, open_project, get_projects,save_root_folder])
+        .invoke_handler(tauri::generate_handler![greet,get_config,save_default_login, open_project, open_single_dir, get_projects, get_project_dirs, save_root_folder, vendor_login])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
