@@ -1,0 +1,14 @@
+import { check } from "@tauri-apps/plugin-updater"
+import { relaunch } from "@tauri-apps/plugin-process"
+
+export async function checkForUpdate() {
+  try {
+    const update = await check()
+    if (!update) return
+
+    await update.downloadAndInstall()
+    await relaunch()
+  } catch {
+    // falha silenciosa — não interrompe o app
+  }
+}

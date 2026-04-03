@@ -10,6 +10,9 @@
     "shell:allow-open",
     "dialog:default",
     "dialog:default",
-    "log:default"
+    "log:default",
+    "updater:default",
+    "core:app:allow-app-hide",
+    "process:default"
   ]
 }

@@ -31,5 +31,13 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "RWTPcfhttGYH5wFAdmoIP81DtCZb0+oUqycSlW+Zp2BVNgiP+5+9UWJv",
+      "endpoints": [
+        "https://github.com/Pd-Troia/Manage-Work-Projects/releases/latest/download/latest.json"
+      ]
+    }
   }
 }
