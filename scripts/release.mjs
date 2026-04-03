@@ -40,7 +40,7 @@ writeFileSync("src-tauri/Cargo.toml", cargo)
 console.log(`✓ Versão atualizada para ${version}`)
 
 // Commit
-execSync(`git add package.json src-tauri/tauri.conf.json src-tauri/Cargo.toml`, { stdio: "inherit" })
+execSync(`git add package.json src-tauri/tauri.conf.json src-tauri/Cargo.toml src-tauri/Cargo.lock`, { stdio: "inherit" })
 execSync(`git commit -m "chore: bump version → ${version}"`, { stdio: "inherit" })
 console.log(`✓ Commit criado`)
 
