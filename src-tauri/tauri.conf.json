@@ -34,7 +34,7 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "RWTPcfhttGYH5wFAdmoIP81DtCZb0+oUqycSlW+Zp2BVNgiP+5+9UWJv",
+      "pubkey": "RWQimUz2TVE8cy+G/z56skz5LTTJFWIVowIuvNYN7qUo1X49XPPVvgHT",
       "endpoints": [
         "https://github.com/Pd-Troia/Manage-Work-Projects/releases/latest/download/latest.json"
       ]
