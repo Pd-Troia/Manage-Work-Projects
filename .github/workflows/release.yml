@@ -34,6 +34,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Debug secrets
+        shell: bash
+        run: |
+          echo "PRIVATE_KEY length: ${#TAURI_SIGNING_PRIVATE_KEY}"
+          echo "PASSWORD length: ${#TAURI_SIGNING_PRIVATE_KEY_PASSWORD}"
+          echo "PRIVATE_KEY first line: $(echo \"$TAURI_SIGNING_PRIVATE_KEY\" | head -1)"
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+
       - name: Build and release
         uses: tauri-apps/tauri-action@v0
         env:
@@ -47,4 +57,19 @@ jobs:
           releaseDraft: false
           prerelease: false
           updaterJsonPreferNsis: true
-          updaterJsonKeepUniversal: false
+
+      - name: List bundle artifacts
+        if: always()
+        shell: bash
+        run: |
+          echo "=== NSIS bundle ==="
+          ls -la src-tauri/target/release/bundle/nsis/ || true
+          echo "=== MSI bundle ==="
+          ls -la src-tauri/target/release/bundle/msi/ || true
+          echo "=== SIG contents ==="
+          for f in src-tauri/target/release/bundle/nsis/*.sig src-tauri/target/release/bundle/msi/*.sig; do
+            if [ -f "$f" ]; then
+              echo "--- $f ---"
+              cat "$f" | head -2
+            fi
+          done
