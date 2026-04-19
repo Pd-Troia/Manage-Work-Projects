@@ -2,6 +2,7 @@ name: Release
 
 on:
   push:
+    branches: [main]
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
@@ -9,9 +10,27 @@ permissions:
   contents: write
 
 jobs:
+  warm-cache:
+    runs-on: windows-latest
+    if: github.ref_type == 'branch'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Warm Rust cache
+        run: cargo fetch
+        working-directory: src-tauri
+
   release:
     runs-on: windows-latest
-    if: github.event.base_ref == 'refs/heads/main'
+    if: github.ref_type == 'tag' && github.event.base_ref == 'refs/heads/main'
     permissions:
       contents: write
 
